@@ -1,20 +1,42 @@
-import { HeroCopy } from "./hero_copy/hero_copy.component";
-import { HeroFramework } from "./hero_framework/hero_framework.component";
-import { HeroWorkspace } from "./hero_workspace/hero_workspace.component";
+import ArnoldoWorkspaceHero from "../../assets/images/hero/backgrounds/hero_bg_premium.png";
 
-import { HeroSection, HeroContainer, HeroVisual } from "./hero.styles";
+import { HeroCopy } from "./hero_copy/hero_copy.component";
+
+import {
+  HeroSection,
+  HeroBackgroundImage,
+  HeroBackgroundOverlay,
+  HeroContainer,
+  HeroCopyColumn,
+  HeroMobileVisual,
+  HeroMobileImage,
+  HeroImageBlend,
+} from "./hero.styles";
 
 export const Hero = () => {
   return (
     <HeroSection>
-      <HeroContainer>
-        <HeroCopy />
+      <HeroBackgroundImage
+        src={ArnoldoWorkspaceHero}
+        alt=""
+        aria-hidden="true"
+      />
 
-        <HeroVisual>
-          <HeroFramework />
-          <HeroWorkspace />
-        </HeroVisual>
+      <HeroBackgroundOverlay aria-hidden="true" />
+      <HeroImageBlend />
+
+      <HeroContainer>
+        <HeroCopyColumn>
+          <HeroCopy />
+        </HeroCopyColumn>
       </HeroContainer>
+
+      <HeroMobileVisual>
+        <HeroMobileImage
+          src={ArnoldoWorkspaceHero}
+          alt="Arnoldo Alvarez working on product designs at his desk"
+        />
+      </HeroMobileVisual>
     </HeroSection>
   );
 };

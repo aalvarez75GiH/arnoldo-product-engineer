@@ -17,15 +17,16 @@ export const HeroCopy = () => {
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const handleApproachClick = () => {
+  const handleProcessClick = () => {
     document
-      .getElementById("how-i-work")
+      .getElementById("product-framework")
       ?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <HeroContent>
-      <HeroEyebrow>I turn uncertainty into exceptional products</HeroEyebrow>
+      <HeroEyebrow>Hi, I&apos;m Arnoldo — Product Engineer</HeroEyebrow>
+      {/* <HeroEyebrow>I turn uncertainty into exceptional products</HeroEyebrow> */}
 
       <HeroTitle>
         Great products
@@ -36,8 +37,8 @@ export const HeroCopy = () => {
       </HeroTitle>
 
       <HeroDescription>
-        Whether you have an idea or a clear plan, I help you validate, design,
-        and build digital products people love to use.
+        I help people and businesses validate ideas and build digital products
+        that people will love to use.
       </HeroDescription>
 
       <HeroActions>
@@ -46,8 +47,8 @@ export const HeroCopy = () => {
           <HeroArrow aria-hidden="true">→</HeroArrow>
         </HeroPrimaryButton>
 
-        <HeroSecondaryButton type="button" onClick={handleApproachClick}>
-          See my approach
+        <HeroSecondaryButton type="button" onClick={handleProcessClick}>
+          Explore my process
         </HeroSecondaryButton>
       </HeroActions>
     </HeroContent>

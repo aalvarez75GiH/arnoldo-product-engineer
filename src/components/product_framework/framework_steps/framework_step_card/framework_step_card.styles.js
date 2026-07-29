@@ -1,61 +1,111 @@
 import styled from "styled-components";
+import { keyframes } from "styled-components";
 
-const getStepColor = (tone, theme) =>
-  tone === "orange" ? theme.colors.brand.orange : theme.colors.brand.blue;
+const revealCard = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
 
 export const StepCard = styled.article`
+  animation: ${revealCard} 500ms ease forwards;
+  opacity: 0;
+
+  animation-delay: ${({ $index }) => `${$index * 70}ms`};
+
   position: relative;
 
   display: flex;
   flex-direction: column;
+
+  width: 100%;
   min-width: 0;
-  min-height: 320px;
-  padding: 18px 15px 15px;
+  min-height: 370px;
+  padding: 20px 18px 16px;
 
   border: 1px solid ${({ theme }) => theme.colors.border.light};
-  border-radius: 15px;
+  border-radius: 16px;
 
-  background: rgba(255, 255, 255, 0.82);
-  box-shadow: 0 16px 34px rgba(15, 39, 58, 0.06);
-  backdrop-filter: blur(14px);
+  background: ${({ theme }) => theme.colors.background.card};
+  box-shadow: 0 16px 34px rgba(11, 38, 59, 0.055);
+
+  overflow: visible;
+
+  transform: translateY(${({ $offsetY = "0px" }) => $offsetY})
+    rotate(${({ $rotation = "0deg" }) => $rotation})
+    scale(${({ $scale = 1 }) => $scale});
 
   @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
-    min-height: 340px;
-    padding: 20px 17px 16px;
+    min-height: 410px;
+    padding: 22px 20px 18px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    min-height: 290px;
-    padding: 15px 12px 13px;
+    min-height: 350px;
+    padding: 18px 15px 14px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.laptop}) {
-    min-height: 300px;
-    padding: 17px;
+    min-height: 390px;
+    padding: 20px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    min-height: 270px;
-    padding: 15px;
+    flex: 0 0 min(72vw, 330px);
+    width: min(72vw, 330px);
+
+    min-height: 390px;
+    padding: 20px;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    min-height: 245px;
-    padding: 14px;
+    flex-basis: min(82vw, 320px);
+    width: min(82vw, 320px);
+
+    min-height: 380px;
+    padding: 18px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+    flex-basis: min(84vw, 292px);
+    width: min(84vw, 292px);
+
+    min-height: 360px;
+    padding: 17px;
   }
 `;
 
 export const StepHeader = styled.div`
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 8px;
+
+  width: 100%;
+  min-width: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 7px;
+  }
 `;
 
 export const StepNumber = styled.span`
-  color: ${({ $tone, theme }) => getStepColor($tone, theme)};
-  font-family: ${({ theme }) => theme.fonts.heading};
-  font-size: 1.15rem;
-  font-weight: 800;
+  flex: 0 0 auto;
+
+  color: ${({ $tone, theme }) =>
+    $tone === "orange" ? theme.colors.brand.orange : theme.colors.brand.blue};
+
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: 1.12rem;
+  font-weight: 700;
   line-height: 1;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
@@ -63,11 +113,15 @@ export const StepNumber = styled.span`
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    font-size: 1.02rem;
+    font-size: 1rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    font-size: 1.08rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    font-size: 0.98rem;
+    font-size: 1.02rem;
   }
 `;
 
@@ -76,93 +130,115 @@ export const StepTitle = styled.h3`
 
   color: ${({ theme }) => theme.colors.text.primary};
   font-family: ${({ theme }) => theme.fonts.body};
-  font-size: 0.72rem;
-  font-weight: 800;
+  font-size: 0.74rem;
+  font-weight: 700;
   line-height: 1.2;
-  letter-spacing: 0.018em;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 
+  white-space: normal;
+
   @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
-    font-size: 0.76rem;
+    font-size: 0.78rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    font-size: 0.64rem;
+    font-size: 0.68rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    font-size: 0.7rem;
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 0.75rem;
   }
 `;
 
 export const StepDescription = styled.p`
-  min-height: 72px;
-  margin: 18px 0 20px;
+  min-height: 66px;
+  margin: 20px 0 0;
 
   color: ${({ theme }) => theme.colors.text.primary};
   font-family: ${({ theme }) => theme.fonts.body};
   font-size: 0.76rem;
-  font-weight: 500;
-  line-height: 1.6;
+  font-weight: 400;
+  line-height: 1.55;
+
+  overflow-wrap: normal;
+  word-break: normal;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
-    min-height: 76px;
-    margin-top: 20px;
-    margin-bottom: 22px;
+    min-height: 72px;
     font-size: 0.8rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    min-height: 62px;
-    margin: 14px 0 15px;
-    font-size: 0.67rem;
+    min-height: 68px;
+    margin-top: 17px;
+    font-size: 0.7rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.laptop}) {
-    min-height: 64px;
-    font-size: 0.74rem;
+    min-height: 58px;
+    font-size: 0.79rem;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    min-height: 56px;
-    font-size: 0.72rem;
+    min-height: auto;
+    margin-top: 18px;
+    font-size: 0.84rem;
+    line-height: 1.58;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    min-height: auto;
-    margin: 12px 0 18px;
-    font-size: 0.68rem;
+    font-size: 0.82rem;
   }
 `;
 
 export const StepVisual = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
+
   flex: 1;
 
-  min-height: 150px;
-  margin-top: auto;
-  overflow: hidden;
+  width: 100%;
+  min-height: 205px;
+  margin-top: 14px;
+  padding: 4px;
+
+  overflow: visible;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
-    min-height: 175px;
+    min-height: 235px;
+    margin-top: 16px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    min-height: 132px;
+    min-height: 185px;
+    margin-top: 10px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.laptop}) {
-    min-height: 150px;
+    min-height: 220px;
+    margin-top: 16px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    min-height: 126px;
+    min-height: 235px;
+    margin-top: 18px;
+    padding: 6px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    min-height: 135px;
+    min-height: 230px;
+    margin-top: 16px;
+    padding: 4px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+    min-height: 215px;
   }
 `;
 
@@ -170,62 +246,102 @@ export const StepImage = styled.img`
   display: block;
 
   width: auto;
-  max-width: 155px;
-  max-height: 155px;
+  max-width: min(${({ $maxWidth = "220px" }) => $maxWidth}, 100%);
+  max-height: 215px;
 
   object-fit: contain;
-  object-position: center bottom;
+  object-position: center;
+
+  transform: translateY(${({ $offsetY = "0px" }) => $offsetY})
+    scale(${({ $scale = 1 }) => $scale});
+
+  transform-origin: center;
+  transition: transform ${({ theme }) => theme.transitions.normal};
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 
   @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
-    max-width: 180px;
-    max-height: 175px;
+    max-width: min(
+      calc(${({ $maxWidth = "220px" }) => $maxWidth} + 20px),
+      100%
+    );
+    max-height: 245px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    max-width: 135px;
-    max-height: 130px;
+    max-width: min(
+      calc(${({ $maxWidth = "220px" }) => $maxWidth} - 25px),
+      100%
+    );
+    max-height: 190px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.laptop}) {
-    max-width: 160px;
-    max-height: 150px;
+    max-width: min(calc(${({ $maxWidth = "220px" }) => $maxWidth} + 10px), 90%);
+    max-height: 220px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
-    max-width: 145px;
-    max-height: 125px;
+    max-width: min(calc(${({ $maxWidth = "220px" }) => $maxWidth} + 20px), 88%);
+    max-height: 225px;
   }
 
   @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
-    max-width: 175px;
-    max-height: 140px;
+    max-width: min(calc(${({ $maxWidth = "220px" }) => $maxWidth} + 12px), 90%);
+    max-height: 220px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobileSmall}) {
+    max-width: min(${({ $maxWidth = "220px" }) => $maxWidth}, 90%);
+    max-height: 205px;
   }
 `;
 
 export const StepConnector = styled.span`
   position: absolute;
-  top: 56%;
-  right: -18px;
-  z-index: 3;
+  top: 72%;
+  right: -22px;
+  z-index: 4;
 
-  color: ${({ theme }) => theme.colors.brand.orange};
-  font-size: 1rem;
-  font-weight: 700;
+  display: grid;
+  place-items: center;
+
+  width: 28px;
+  height: 28px;
+
+  border-radius: ${({ theme }) => theme.radius.pill};
+
+  background: ${({ theme }) => theme.colors.brand.orange};
+  color: ${({ theme }) => theme.colors.text.inverse};
+
+  font-family: ${({ theme }) => theme.fonts.body};
+  font-size: 0.9rem;
+  font-weight: 600;
   line-height: 1;
+
+  box-shadow: 0 8px 18px rgba(255, 107, 0, 0.2);
 
   transform: translateY(-50%);
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
-    right: -14px;
-    font-size: 0.82rem;
+  @media (min-width: ${({ theme }) => theme.breakpoints.wide}) {
+    right: -23px;
+    width: 30px;
+    height: 30px;
   }
 
-  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.desktop}) {
+    right: -18px;
+    width: 24px;
+    height: 24px;
+    font-size: 0.78rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.laptop}) {
     display: none;
   }
 `;
-
-/* Discover */
 
 export const ResearchVisual = styled.div`
   position: relative;
